@@ -144,7 +144,7 @@ public class MyWatchFace extends CanvasWatchFaceService {
 
             int hourTime = mCalendar.get(Calendar.HOUR);
 
-            if(hourTime >18 && hourTime < 6) {
+            if(hourTime >18 || hourTime < 6) {
 
                 mBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.metal_background_night);
             }
