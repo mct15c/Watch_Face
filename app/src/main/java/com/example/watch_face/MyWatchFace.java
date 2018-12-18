@@ -25,6 +25,7 @@ import android.widget.Toast;
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.TimeZone;
+import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -41,6 +42,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class MyWatchFace extends CanvasWatchFaceService {
 
+    Timer t;
 
     /*
      * Updates rate in milliseconds for interactive mode. We update once a second to advance the
@@ -139,8 +141,17 @@ public class MyWatchFace extends CanvasWatchFaceService {
         private void initializeBackground() {
             mBackgroundPaint = new Paint();
             mBackgroundPaint.setColor(Color.BLACK);
-            mBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.metal_background_final);
 
+            int hourTime = mCalendar.get(Calendar.HOUR);
+
+            if(hourTime >18 && hourTime < 6) {
+
+                mBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.metal_background_night);
+            }
+
+            else {
+                mBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.metal_background_day);
+            }
 
             /* Extracts colors from background image to improve watchface style. */
             Palette.from(mBackgroundBitmap).generate(new Palette.PaletteAsyncListener() {
@@ -158,6 +169,8 @@ public class MyWatchFace extends CanvasWatchFaceService {
 
         private void initializeWatchFace() {
             /* Set defaults for colors */
+
+
             mWatchHandColor = Color.WHITE;
             mWatchHandHighlightColor = Color.RED;
             mWatchHandShadowColor = Color.BLACK;
@@ -512,4 +525,7 @@ public class MyWatchFace extends CanvasWatchFaceService {
             }
         }
     }
+
+
 }
+
